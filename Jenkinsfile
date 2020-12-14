@@ -4,11 +4,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh './mvnw -Dmaven.test.failure.ignore=true clean verify site'
+                sh 'cp -r target/site/allure-maven-plugin /home/ubuntu/report/output/output-comdev'
             }
         }
          stage('Report') {
                     steps {
-                        allure([includeProperties: false, jdk: '', properties: [], reportBuildPolicy: 'ALWAYS', results: [[path: 'target/site/allure-maven-plugin']] ])
+                        allure([includeProperties: false, jdk: '', properties: [], reportBuildPolicy: 'ALWAYS', results: [[path: '/home/ubuntu/report/output/output-comdev']] ])
                     }
                 }
     }
